@@ -2,6 +2,9 @@
 
 Modelo estadístico-probabilístico para estimar cuántas inyecciones va a durar una columna cromatográfica HPLC antes de fallar el System Suitability Test (SST), integrando datos históricos de tres laboratorios farmacéuticos.
 
+> **Aviso de privacidad**: los datos y nombres de los laboratorios participantes son confidenciales.
+> Las tres fuentes de datos están anonimizadas como **Fuente A**, **Fuente B** y **Fuente C** en todo el código y la documentación.
+
 ---
 
 ## Problema
