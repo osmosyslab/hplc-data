@@ -1,0 +1,21 @@
+# -- Datos de clientes (no se publican) --
+data/
+plots/
+
+# -- Python --
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+.mypy_cache/
+
+# -- IDE y herramientas --
+.vscode/
+.claude/
+
+# -- Archivos de desarrollo no publicados --
+EDA/
+gen_graficos.py
+_predicciones_ficticias.py
+resumen_descriptivo_premodelo.md
+resumen_ejecutivo_redes.md
