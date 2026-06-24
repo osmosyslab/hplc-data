@@ -256,7 +256,7 @@ def transformar_degradacion_temporal_criterios(
 
 # -- Fuente B ------------------------------------------------------------------
 
-def transformar_columnas_aspen(
+def transformar_columnas_fuente_b(
     df: pd.DataFrame, inyecciones_totales: pd.DataFrame
 ) -> pd.DataFrame:
     """
@@ -300,7 +300,7 @@ def transformar_columnas_aspen(
     return df.reset_index(drop=True)
 
 
-def transformar_inyecciones_aspen(df: pd.DataFrame) -> pd.DataFrame:
+def transformar_inyecciones_fuente_b(df: pd.DataFrame) -> pd.DataFrame:
     """Calcula inyecciones acumuladas por columna para Fuente B."""
     df = df.copy()
 
@@ -323,7 +323,7 @@ def transformar_inyecciones_aspen(df: pd.DataFrame) -> pd.DataFrame:
 
 # -- Fuente C ------------------------------------------------------------------
 
-def transformar_columnas_roche(df: pd.DataFrame) -> pd.DataFrame:
+def transformar_columnas_fuente_c(df: pd.DataFrame) -> pd.DataFrame:
     """
     Limpia y normaliza el catálogo de columnas de Fuente C.
 
@@ -360,7 +360,7 @@ def transformar_columnas_roche(df: pd.DataFrame) -> pd.DataFrame:
     return df.reset_index(drop=True)
 
 
-def transformar_inyecciones_roche(df: pd.DataFrame) -> pd.DataFrame:
+def transformar_inyecciones_fuente_c(df: pd.DataFrame) -> pd.DataFrame:
     """
     Calcula inyecciones acumuladas por columna para Fuente C.
 

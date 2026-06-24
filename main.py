@@ -15,20 +15,20 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from ETL.extract import (
-    columnas_hplc, criteriosXtest, inyeccionesXtest,
-    columnas_aspen, criterios_aspen, inyecciones_totales_aspen, trayectoria_inyecciones_aspen,
-    columnas_roche, tests_roche,
-    especificaciones_aspen, especificaciones_roche, especificaciones_bayer_lerma,
+    columnas_a, criterios_a, inyecciones_a,
+    columnas_b, criterios_b, inyecciones_totales_b, trayectoria_inyecciones_b,
+    columnas_c, tests_c,
+    especificaciones_a, especificaciones_b, especificaciones_c,
 )
 from ETL.transform import (
     transformar_columnas_hplc,
     transformar_resultados_criterios,
     transformar_inyecciones,
     transformar_degradacion_temporal_criterios,
-    transformar_columnas_aspen,
-    transformar_inyecciones_aspen,
-    transformar_columnas_roche,
-    transformar_inyecciones_roche,
+    transformar_columnas_fuente_b,
+    transformar_inyecciones_fuente_b,
+    transformar_columnas_fuente_c,
+    transformar_inyecciones_fuente_c,
 )
 from ETL.load import guardar_datos, guardar_model_data, guardar_especificaciones, cargar_datos, datos_procesados_existen
 import pandas as pd
@@ -36,22 +36,22 @@ import pandas as pd
 
 def run_etl():
     # -- Fuente A -------------------------------------------------------------
-    col_a       = transformar_columnas_hplc(columnas_hplc)
-    col_a["fuente"]  = "Fuente A"
-    crit_a      = transformar_resultados_criterios(criteriosXtest)
-    crit_a["fuente"] = "Fuente A"
-    inj_a       = transformar_inyecciones(inyeccionesXtest)
-    inj_a["fuente"]  = "Fuente A"
+    col_a        = transformar_columnas_hplc(columnas_a)
+    col_a["fuente"]   = "Fuente A"
+    crit_a       = transformar_resultados_criterios(criterios_a)
+    crit_a["fuente"]  = "Fuente A"
+    inj_a        = transformar_inyecciones(inyecciones_a)
+    inj_a["fuente"]   = "Fuente A"
 
     # -- Fuente B -------------------------------------------------------------
-    col_b   = transformar_columnas_aspen(columnas_aspen, inyecciones_totales_aspen)
-    crit_b  = transformar_resultados_criterios(criterios_aspen)
+    col_b   = transformar_columnas_fuente_b(columnas_b, inyecciones_totales_b)
+    crit_b  = transformar_resultados_criterios(criterios_b)
     crit_b["fuente"] = "Fuente B"
-    inj_b   = transformar_inyecciones_aspen(trayectoria_inyecciones_aspen)
+    inj_b   = transformar_inyecciones_fuente_b(trayectoria_inyecciones_b)
 
     # Códigos que aparecen en Fuente A y en Fuente B son columnas físicamente
     # distintas en sitios distintos. Se desambiguan añadiendo sufijo "_B"
-    # en todas las tablas de Fuente B para evitar colisiones de ID.
+    # en todas las tablas de Fuente B para evitar colisiones de columna_id.
     overlap_a_b = set(col_a["columna_id"]) & set(col_b["columna_id"])
     if overlap_a_b:
         def _sufijo_b(df, col="columna_id"):
@@ -63,8 +63,8 @@ def run_etl():
         inj_b   = _sufijo_b(inj_b)
 
     # -- Fuente C -------------------------------------------------------------
-    col_c = transformar_columnas_roche(columnas_roche)
-    inj_c = transformar_inyecciones_roche(tests_roche)
+    col_c = transformar_columnas_fuente_c(columnas_c)
+    inj_c = transformar_inyecciones_fuente_c(tests_c)
 
     # Poblar total_inyecciones desde el máximo acumulado por columna
     totales_c = (
@@ -111,11 +111,11 @@ def run_etl():
     print(f"  distancia_umbral < 0 (fallos): {(degradacion['distancia_umbral'] < 0).sum()}")
 
     # -- Especificaciones de columnas -----------------------------------------
-    especificaciones_aspen["fuente"]       = "Fuente B"
-    especificaciones_roche["fuente"]       = "Fuente C"
-    especificaciones_bayer_lerma["fuente"] = "Fuente A"
+    especificaciones_a["fuente"] = "Fuente A"
+    especificaciones_b["fuente"] = "Fuente B"
+    especificaciones_c["fuente"] = "Fuente C"
     especificaciones = pd.concat(
-        [especificaciones_aspen, especificaciones_roche, especificaciones_bayer_lerma],
+        [especificaciones_a, especificaciones_b, especificaciones_c],
         ignore_index=True,
     )
 
