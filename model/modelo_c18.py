@@ -14,7 +14,7 @@ Pipeline
 7. predecir_vida_util    -> percentiles P25/P50/P75 de vida util  (reusa survival.py)
 
 Covariables utiles en C-18 (tipo_relleno es constante, no aporta):
-  - fuente: laboratorio de origen (Bayer Lerma, ASPEN, Roche).
+  - fuente: fuente de origen (Fuente A / Fuente B / Fuente C).
             Unica covariable viable: tipo_columna genera overfitting severo
             (EPV=0.16 con 12 eventos y 74 tipos), y las variables fisicas
             (longitud, tamanio_particula) no muestran señal estadistica (p>0.2).
@@ -79,7 +79,7 @@ def preparar_survival_c18(
     columna_id         : identificador de la columna
     tiempo             : inyecciones acumuladas al evento o al ultimo registro
     evento             : 1 = fallo SST observado, 0 = censurada
-    fuente             : Bayer Lerma / ASPEN / Roche
+    fuente             : Fuente A / Fuente B / Fuente C
     tipo_columna       : codigo de columna (ej. C001, C186, C218 ...)
     tipo_relleno       : siempre "C18" en este dataset
     longitud           : longitud de la columna en mm

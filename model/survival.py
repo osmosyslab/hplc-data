@@ -77,7 +77,7 @@ def preparar_survival(
     columna_id   : identificador de la columna
     tiempo       : inyecciones acumuladas al evento o al ultimo registro
     evento       : 1 = fallo SST observado, 0 = censurada
-    fuente       : Bayer Lerma / ASPEN / Roche
+    fuente       : Fuente A / Fuente B / Fuente C
     tipo_columna : prefijo del codigo (C124, COL014, ...)
     tipo_relleno : fase estacionaria agrupada (C18, C8, IonExchange, ...)
                    desde Especificaciones_columnas.csv; NaN si no hay match.
